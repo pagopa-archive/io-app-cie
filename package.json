@@ -1,5 +1,5 @@
 {
-  "name": "TODO",
+  "name": "IOAppCIE",
   "version": "0.0.1",
   "description": "TODO",
   "repository": "https://github.com/pagopa/TODO",
@@ -14,19 +14,25 @@
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "jest": "^25.2.7",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^25.3.1",
     "@types/node": "10.14.1",
+    "@types/react": "^16.9.53",
+    "@types/react-native": "^0.63.25",
     "danger": "^8.0.0",
     "danger-plugin-digitalcitizenship": "*",
     "italia-tslint-rules": "*",
+    "jest": "^25.2.7",
     "prettier": "^1.12.1",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^25.3.1",
     "tslint": "^5.1.0",
     "typescript": "^3.9.0"
   },
   "dependencies": {
+    "buffer": "^5.6.0",
     "fp-ts": "1.17.4",
-    "io-ts": "1.8.5"
+    "io-ts": "1.8.5",
+    "react": "^16.14.0",
+    "react-native": "^0.63.3",
+    "react-native-nfc-manager": "^2.2.0"
   }
 }
