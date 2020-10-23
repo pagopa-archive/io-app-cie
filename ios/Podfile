@@ -22,12 +22,3 @@ target 'IOAppCIE' do
     flipper_post_install(installer)
   end
 end
-
-target 'IOAppCIE-tvOS' do
-  # Pods for IOAppCIE-tvOS
-
-  target 'IOAppCIE-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end

@@ -92,7 +92,7 @@ const App: React.FunctionComponent = () => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={[styles.mainView]}>
       <Text style={[styles.textLabel]}>NFC APDU Protocol Protocol Demo</Text>
       <Text style={[styles.textNormal]}>
         This utility runs ICAO Test Case 7816_A_1, which consists in sending the
@@ -130,6 +130,9 @@ const App: React.FunctionComponent = () => {
 };
 
 const styles = StyleSheet.create({
+  mainView: {
+    padding: 20,
+  },
   textBox: {
     padding: 10,
     width: 250,

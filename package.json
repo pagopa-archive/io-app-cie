@@ -1,7 +1,7 @@
 {
-  "name": "IOAppCIE",
+  "name": "io-app-cie",
   "version": "0.0.1",
-  "description": "TODO",
+  "description": "App for testing MRTD/IAS CIE applications",
   "repository": "https://github.com/pagopa/io-app-cie/",
   "author": "https://pagopa.gov.it",
   "license": "MIT",
