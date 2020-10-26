@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-  StyleSheet,
+  StyleSheet
 } from "react-native";
 import NfcManager, { NfcTech } from "react-native-nfc-manager";
 import { Buffer } from "buffer";
@@ -16,11 +16,7 @@ const App: React.FunctionComponent = () => {
   const [testSuccess, setTestSuccess] = useState(false);
   const [waitingCIE, setWaitingCIE] = useState(false);
 
-  const cleanUp = () => {
-    // Do the cleanings in any case
-    NfcManager.cancelTechnologyRequest().catch(() => 0);
-
-    // Reset state
+  const resetState = () => {
     setADPUResponse("APDU Response");
     setDetectedTechnology("");
     setNfcUID("");
@@ -28,11 +24,29 @@ const App: React.FunctionComponent = () => {
     setWaitingCIE(false);
   };
 
+  const cancelTechRequest = () => {
+    NfcManager.cancelTechnologyRequest().catch(() => 0);
+  };
+
+  const cleanUp = () => {
+    // Do the cleanings in any case
+    cancelTechRequest();
+    // Reset state
+    resetState();
+  };
+
   useEffect(() => {
-    NfcManager.start();
+    NfcManager.start().catch(error => {
+      cancelTechRequest();
+      alert(error);
+    });
     // Do the cleanings after rendering only if the app is not waiting for CIE
-    return () =>
-      waitingCIE ? null : NfcManager.cancelTechnologyRequest().catch(() => 0);
+    const myCleanUp = () => {
+      if (!waitingCIE) {
+        cancelTechRequest();
+      }
+    };
+    return myCleanUp;
   });
 
   const test = async () => {
@@ -40,7 +54,7 @@ const App: React.FunctionComponent = () => {
       const tech = NfcTech.IsoDep;
       setWaitingCIE(true);
       const resp = await NfcManager.requestTechnology(tech, {
-        alertMessage: "Ready to send some APDU",
+        alertMessage: "Ready to send some APDU"
       });
 
       // the NFC uid can be found in tag.id
@@ -69,7 +83,7 @@ const App: React.FunctionComponent = () => {
         0x02,
         0x47,
         0x10,
-        0x01,
+        0x01
       ];
 
       const apduAnswer = await Platform.select({
@@ -79,7 +93,7 @@ const App: React.FunctionComponent = () => {
         ios: async () => {
           const { response } = await NfcManager.sendCommandAPDUIOS(command);
           return response;
-        },
+        }
       })();
       const humanReadableResponse = Buffer.from(apduAnswer).toString("hex");
 
@@ -131,7 +145,7 @@ const App: React.FunctionComponent = () => {
 
 const styles = StyleSheet.create({
   mainView: {
-    padding: 20,
+    padding: 20
   },
   textBox: {
     padding: 10,
@@ -140,7 +154,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginTop: 10,
     marginBottom: 10,
-    borderWidth: 1,
+    borderWidth: 1
   },
   primaryButton: {
     padding: 10,
@@ -150,30 +164,30 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     borderWidth: 1,
-    backgroundColor: "cyan",
+    backgroundColor: "cyan"
   },
   textLabel: {
     padding: 10,
     marginTop: 10,
     marginBottom: 20,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   textNormal: {
     padding: 0,
-    marginLeft: 20,
+    marginLeft: 20
   },
   textWarning: {
     padding: 0,
     marginLeft: 20,
     fontWeight: "bold",
-    color: "red",
+    color: "red"
   },
   success: {
-    borderColor: "green",
+    borderColor: "green"
   },
   error: {
-    borderColor: "red",
-  },
+    borderColor: "red"
+  }
 });
 
 export default App;
