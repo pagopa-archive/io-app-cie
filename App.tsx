@@ -69,7 +69,7 @@ const App: React.FunctionComponent = () => {
       // According to the ICAO recommendation, the P2 denotes "return no file
       // information", and there is no Le byte present. Therefore, the response
       // data field MUST be empty. The e-Passport MUST return status bytes
-      //‘90 00’.
+      // ‘90 00’.
 
       const command = [
         0x00,
