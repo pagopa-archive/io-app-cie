@@ -10,16 +10,22 @@
     "build": "tsc",
     "postversion": "git push && git push --tags",
     "test": "jest",
-    "lint": "tslint --project ."
+    "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx",
+    "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix"
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/node": "10.14.1",
     "@types/react": "^16.9.53",
     "@types/react-native": "^0.63.25",
+    "@react-native-community/eslint-config": "^1.1.0",
     "danger": "^8.0.0",
     "danger-plugin-digitalcitizenship": "*",
     "italia-tslint-rules": "*",
+    "eslint": "^6.5.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-react": "^7.20.6",
+    "@typescript-eslint/parser": "^3.10.1",
     "jest": "^25.2.7",
     "prettier": "^1.12.1",
     "rimraf": "^2.6.2",
@@ -33,6 +39,10 @@
     "io-ts": "1.8.5",
     "react": "^16.14.0",
     "react-native": "^0.63.3",
-    "react-native-nfc-manager": "^2.2.0"
+    "react-native-nfc-manager": "^2.2.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-functional": "^3.0.2",
+    "eslint-plugin-sonarjs": "^0.5.0"
   }
 }

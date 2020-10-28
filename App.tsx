@@ -1,3 +1,4 @@
+import { Buffer } from "buffer";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -7,7 +8,6 @@ import {
   StyleSheet
 } from "react-native";
 import NfcManager, { NfcTech } from "react-native-nfc-manager";
-import { Buffer } from "buffer";
 
 const App: React.FunctionComponent = () => {
   const [adpuResponse, setADPUResponse] = useState("APDU Response");
@@ -41,12 +41,11 @@ const App: React.FunctionComponent = () => {
       alert(error);
     });
     // Do the cleanings after rendering only if the app is not waiting for CIE
-    const myCleanUp = () => {
+    return () => {
       if (!waitingCIE) {
         cancelTechRequest();
       }
     };
-    return myCleanUp;
   });
 
   const test = async () => {
@@ -87,9 +86,7 @@ const App: React.FunctionComponent = () => {
       ];
 
       const apduAnswer = await Platform.select({
-        default: async () => {
-          return await NfcManager.transceive(command);
-        },
+        default: async () => await NfcManager.transceive(command),
         ios: async () => {
           const { response } = await NfcManager.sendCommandAPDUIOS(command);
           return response;
