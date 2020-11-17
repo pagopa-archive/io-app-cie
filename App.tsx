@@ -1,12 +1,12 @@
 import { Buffer } from "buffer";
-import { debug } from "console";
 import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   Platform,
-  StyleSheet
+  StyleSheet,
+  TextInput
 } from "react-native";
 import NfcManager, { NfcTech } from "react-native-nfc-manager";
 
@@ -16,6 +16,7 @@ const App: React.FunctionComponent = () => {
   const [nfcUID, setNfcUID] = useState("");
   const [testSuccess, setTestSuccess] = useState(false);
   const [waitingCIE, setWaitingCIE] = useState(false);
+  const [debugLog, setDebugLog] = useState("");
 
   const resetState = () => {
     setADPUResponse("APDU Response");
@@ -30,6 +31,7 @@ const App: React.FunctionComponent = () => {
   };
 
   const cleanUp = () => {
+    setDebugLog("");
     // Do the cleanings in any case
     cancelTechRequest();
     // Reset state
@@ -51,6 +53,7 @@ const App: React.FunctionComponent = () => {
 
   const test = async () => {
     try {
+      setDebugLog("");
       const tech = NfcTech.IsoDep;
       setWaitingCIE(true);
       const resp = await NfcManager.requestTechnology(tech, {
@@ -93,12 +96,11 @@ const App: React.FunctionComponent = () => {
           return response;
         }
       })();
-
-      debug("APDU RAW RESPONSE", apduAnswer);
-
       const humanReadableResponse = Buffer.from(apduAnswer).toString("hex");
-
-      debug("APDU READABLE RESPONSE", humanReadableResponse);
+      const debug = `AAPDU RAW RESPONSE: ${JSON.stringify(
+        apduAnswer
+      )}\nAPDU READABLE RESPONSE: ${JSON.stringify(humanReadableResponse)}`;
+      setDebugLog(debug);
 
       setADPUResponse(humanReadableResponse);
       setTestSuccess(humanReadableResponse === "9000");
@@ -141,6 +143,11 @@ const App: React.FunctionComponent = () => {
         style={[styles.textBox, testSuccess ? styles.success : styles.error]}
       >
         <Text>{adpuResponse}</Text>
+      </View>
+      <View style={[styles.textBox, { height: 300 }]}>
+        <TextInput multiline={true} style={{ borderColor: "black" }}>
+          {debugLog}
+        </TextInput>
       </View>
     </View>
   );
