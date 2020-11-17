@@ -1,4 +1,5 @@
 import { Buffer } from "buffer";
+import { debug } from "console";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -92,7 +93,12 @@ const App: React.FunctionComponent = () => {
           return response;
         }
       })();
+
+      debug("APDU RAW RESPONSE", apduAnswer);
+
       const humanReadableResponse = Buffer.from(apduAnswer).toString("hex");
+
+      debug("APDU READABLE RESPONSE", humanReadableResponse);
 
       setADPUResponse(humanReadableResponse);
       setTestSuccess(humanReadableResponse === "9000");
