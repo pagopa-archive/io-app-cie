@@ -6,6 +6,8 @@
   "author": "https://pagopa.gov.it",
   "license": "MIT",
   "scripts": {
+    "run-ios": "react-native run-ios",
+    "run-android": "react-native run-android",
     "prebuild": "rimraf dist",
     "build": "tsc",
     "postversion": "git push && git push --tags",
